@@ -2,9 +2,14 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 
-const apps = require('./app-data.js');
+const app = express();
 
-apps.get('/apps', (req, res) => {
+app.use(morgan('common'));
+app.use(cors());
+
+const apps = require('./apps-data.js');
+
+app.get('/apps', (req, res) => {
     const {search = "", sort, genre} = req.query;
 
     if(sort) {
@@ -25,7 +30,7 @@ apps.get('/apps', (req, res) => {
 
     let results = apps
         .filter(app => 
-            app.title.toLowerCase().includes(search.toLowerCase()));
+            app.App.toLowerCase().includes(search.toLowerCase()));
 
     if(sort) {
         results.sort((a, b) => {
@@ -35,7 +40,7 @@ apps.get('/apps', (req, res) => {
 
     if(genre) {
         results.filter(app =>
-            app.genre.includes(genre))
+            app.Genres.toLowerCase().includes(genre.toLowerCase()));
     }
 
     res.json(results)
