@@ -33,13 +33,13 @@ app.get('/apps', (req, res) => {
             app.App.toLowerCase().includes(search.toLowerCase()));
 
     if(sort) {
-        results.sort((a, b) => {
+        results = results.sort((a, b) => {
             return a[sort] > b[sort] ? 1 : a[sort] < b[sort] ? -1 : 0
         }
     )}
 
     if(genre) {
-        results.filter(app =>
+        results = results.filter(app =>
             app.Genres.toLowerCase().includes(genre.toLowerCase()));
     }
 
